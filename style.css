@@ -2,14 +2,20 @@
   --bg: #0d0d0d;
   --text: #f1f1f1;
   --accent: #6c63ff;
+  --accent-light: #7a6fff;
   --panel: #1a1a1a;
+  --border: #333;
+  --shadow: rgba(0, 0, 0, 0.5);
 }
 
 [data-theme="light"] {
   --bg: #f5f5f5;
   --text: #111;
   --accent: #4b3bf5;
+  --accent-light: #5e4dfb;
   --panel: #ffffff;
+  --border: #ddd;
+  --shadow: rgba(0, 0, 0, 0.1);
 }
 
 * {

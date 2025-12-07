@@ -3,39 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portofolio Muhd. Nabil – Graphic Designer & Creative</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Portofolio Muhd. Nabil – Graphic Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
-    // === Language Toggle ===
+    // === Ganti Bahasa ===
     function setLang(lang) {
       const langs = ['id', 'en'];
       langs.forEach(l => document.querySelectorAll('[data-' + l + ']').forEach(el => el.style.display = 'none'));
       document.querySelectorAll('[data-' + lang + ']').forEach(el => el.style.display = 'block');
       document.documentElement.setAttribute('lang', lang);
-      localStorage.setItem('lang', lang);
     }
 
-    // === Dark/Light Mode ===
+    // === Mode Gelap / Terang ===
     function toggleMode() {
       const body = document.body;
       const isLight = body.getAttribute('data-theme') === 'light';
       const newTheme = isLight ? 'dark' : 'light';
       body.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      updateThemeIcon();
     }
 
-    function updateThemeIcon() {
-      const isDark = document.body.getAttribute('data-theme') === 'dark';
-      const btn = document.querySelector('.theme-toggle');
-      if (btn) {
-        btn.innerHTML = isDark ? '☀️' : '🌙';
-      }
-    }
-
-    // === Mobile Menu Toggle ===
+    // === Menu Burger ===
     function toggleMenu() {
       document.querySelector('.nav-links').classList.toggle('active');
       document.querySelector('.burger').classList.toggle('open');
@@ -43,29 +32,25 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme') || 'dark';
-      const savedLang = localStorage.getItem('lang') || 'id';
       document.body.setAttribute('data-theme', savedTheme);
-      setLang(savedLang);
-      updateThemeIcon();
     });
-
-    // Close menu when clicking a link
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-          document.querySelector('.nav-links').classList.remove('active');
-          document.querySelector('.burger').classList.remove('open');
-        });
-      });
-    });
+    
   </script>
+  <script>
+  // Tutup menu otomatis setelah klik link (di HP)
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('active');
+      document.querySelector('.burger').classList.remove('open');
+    });
+  });
+</script>
+
 </head>
 <body data-theme="dark">
   <header>
     <nav class="navbar">
-      <h1 class="logo">
-        <span class="logo-icon">✨</span>Miftah Art<span>Creative</span>
-      </h1>
+      <h1 class="logo">Miftah Art<span>Creative</span></h1>
 
       <div class="burger" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -74,392 +59,59 @@
       <ul class="nav-links">
         <li><a href="#home" data-id>Beranda</a><a href="#home" data-en style="display:none;">Home</a></li>
         <li><a href="#about" data-id>Tentang</a><a href="#about" data-en style="display:none;">About</a></li>
-        <li><a href="#skills" data-id>Keahlian</a><a href="#skills" data-en style="display:none;">Skills</a></li>
-        <li><a href="#portfolio" data-id>Portofolio</a><a href="#portfolio" data-en style="display:none;">Portfolio</a></li>
+        <li><a href="#project" data-id>Proyek</a><a href="#project" data-en style="display:none;">Project</a></li>
         <li><a href="#contact" data-id>Hubungi</a><a href="#contact" data-en style="display:none;">Contact</a></li>
       </ul>
 
       <div class="controls">
-        <button onclick="setLang('id')" class="lang-btn">🇮🇩</button>
-        <button onclick="setLang('en')" class="lang-btn">🇬🇧</button>
-        <button onclick="toggleMode()" class="theme-toggle">🌙</button>
+        <button onclick="setLang('id')">🇮🇩</button>
+        <button onclick="setLang('en')">🇬🇧</button>
+        <button onclick="toggleMode()">🌙/☀️</button>
       </div>
     </nav>
   </header>
 
   <section class="hero" id="home">
-    <div class="hero-text">
-      <div class="badge" data-id>Creative Designer</div>
-      <div class="badge" data-en style="display:none;">Creative Designer</div>
+    <div class="hero-text fade">
+      <h3 data-id>Halo Teman!</h3>
+      <h3 data-en style="display:none;">Hello Buds</h3>
 
-      <h3 data-id class="greeting">Halo 👋 Teman!</h3>
-      <h3 data-en style="display:none;" class="greeting">Hello 👋 Buds</h3>
+      <h1 data-id>Saya <span>Muhd. Nabil</span></h1>
+      <h1 data-en style="display:none;">I am <span>Muhd. Nabil</span></h1>
 
-      <h1 data-id class="hero-title">Saya <span class="highlight">Muhd. Nabil</span></h1>
-      <h1 data-en style="display:none;" class="hero-title">I'm <span class="highlight">Muhd. Nabil</span></h1>
+      <h4 data-id>Desainer Grafis & Pecinta Visual</h4>
+      <h4 data-en style="display:none;">Graphic Designer & Visual Enthusiast</h4>
 
-      <h2 data-id class="hero-subtitle">Desainer Grafis & Pecinta Visual</h2>
-      <h2 data-en style="display:none;" class="hero-subtitle">Graphic Designer & Visual Enthusiast</h2>
-
-      <p data-id class="hero-desc">Menciptakan desain visual profesional yang memukau untuk media sosial, acara, branding, dan identitas visual yang kuat.</p>
-      <p data-en style="display:none;" class="hero-desc">Creating stunning professional visual designs for social media, events, branding, and strong visual identity.</p>
+      <p data-id>Sayafokus menciptakan desain visual profesional untuk media sosial, acara, dan branding.</p>
+      <p data-en style="display:none;">I focus on creating professional visual designs for social media, events, and branding.</p>
 
       <div class="buttons">
-        <a href="#" class="btn btn-primary" data-id>
-          <i class="fas fa-download"></i> Unduh CV
-        </a>
-        <a href="#" class="btn btn-primary" data-en style="display:none;">
-          <i class="fas fa-download"></i> Download CV
-        </a>
-        <a href="#about" class="btn btn-outline" data-id>
-          <i class="fas fa-arrow-right"></i> Selengkapnya
-        </a>
-        <a href="#about" class="btn btn-outline" data-en style="display:none;">
-          <i class="fas fa-arrow-right"></i> More
-        </a>
-      </div>
-
-      <div class="social-preview">
-        <p data-id>Follow</p>
-        <p data-en style="display:none;">Follow</p>
-        <div class="social-icons">
-          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" title="Behance"><i class="fab fa-behance"></i></a>
-          <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-        </div>
+        <a href="#" class="btn btn-primary" data-id>⬇ Unduh CV</a>
+        <a href="#" class="btn btn-primary" data-en style="display:none;">⬇ Download CV</a>
+        <a href="#about" class="btn btn-outline" data-id>Selengkapnya</a>
+        <a href="#about" class="btn btn-outline" data-en style="display:none;">More</a>
       </div>
     </div>
 
-    <div class="hero-image">
-      <div class="glow-bg"></div>
+    <div class="hero-image fade">
       <div class="decor-plus">+</div>
       <div class="decor-circle"></div>
-      <div class="decor-square"></div>
       <img src="fotohero.png" alt="Muhd. Nabil">
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="container">
-      <h2 data-id>Tentang Saya</h2>
-      <h2 data-en style="display:none;">About Me</h2>
-
-      <div class="about-content">
-        <div class="about-text">
-          <p data-id>Saya adalah desainer grafis berpengalaman dengan passion tinggi untuk menciptakan visual yang stunning dan impactful. Dengan pengalaman bertahun-tahun, saya telah membantu berbagai klien mengkomunikasikan pesan mereka melalui desain yang kreatif dan profesional.</p>
-          <p data-en style="display:none;">I'm an experienced graphic designer with high passion for creating stunning and impactful visuals. With years of experience, I've helped various clients communicate their message through creative and professional design.</p>
-
-          <div class="stats">
-            <div class="stat">
-              <h3>50+</h3>
-              <p data-id>Proyek Selesai</p>
-              <p data-en style="display:none;">Projects Done</p>
-            </div>
-            <div class="stat">
-              <h3>30+</h3>
-              <p data-id>Klien Puas</p>
-              <p data-en style="display:none;">Happy Clients</p>
-            </div>
-            <div class="stat">
-              <h3>5+</h3>
-              <p data-id>Tahun Pengalaman</p>
-              <p data-en style="display:none;">Years Experience</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Skills Section -->
-  <section class="skills" id="skills">
-    <div class="container">
-      <h2 data-id>Keahlian Saya</h2>
-      <h2 data-en style="display:none;">My Skills</h2>
-
-      <div class="skills-grid">
-        <div class="skill-card">
-          <div class="skill-icon">🎨</div>
-          <h3 data-id>Desain Grafis</h3>
-          <h3 data-en style="display:none;">Graphic Design</h3>
-          <p data-id>Logo, branding, poster, dan design marketing profesional</p>
-          <p data-en style="display:none;">Logo, branding, poster, and professional marketing design</p>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon">🎬</div>
-          <h3 data-id>Video & Motion</h3>
-          <h3 data-en style="display:none;">Video & Motion</h3>
-          <p data-id>Editing video, motion graphics, dan animasi profesional</p>
-          <p data-en style="display:none;">Video editing, motion graphics, and professional animation</p>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon">📱</div>
-          <h3 data-id>UI/UX Design</h3>
-          <h3 data-en style="display:none;">UI/UX Design</h3>
-          <p data-id>Interface design, user experience, dan aplikasi mobile</p>
-          <p data-en style="display:none;">Interface design, user experience, and mobile apps</p>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon">✍️</div>
-          <h3 data-id>Content Creator</h3>
-          <h3 data-en style="display:none;">Content Creator</h3>
-          <p data-id>Konten media sosial, copywriting, dan visual storytelling</p>
-          <p data-en style="display:none;">Social media content, copywriting, and visual storytelling</p>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon">🖼️</div>
-          <h3 data-id>Illustration</h3>
-          <h3 data-en style="display:none;">Illustration</h3>
-          <p data-id>Custom illustration, character design, dan digital art</p>
-          <p data-en style="display:none;">Custom illustration, character design, and digital art</p>
-        </div>
-
-        <div class="skill-card">
-          <div class="skill-icon">🛠️</div>
-          <h3 data-id>Web Design</h3>
-          <h3 data-en style="display:none;">Web Design</h3>
-          <p data-id>Website design, layout, dan user interface menarik</p>
-          <p data-en style="display:none;">Website design, layout, and attractive user interface</p>
-        </div>
-      </div>
-
-      <div class="tools">
-        <h3 data-id>Tools & Software</h3>
-        <h3 data-en style="display:none;">Tools & Software</h3>
-        <div class="tool-list">
-          <span>Adobe Creative Suite</span>
-          <span>Figma</span>
-          <span>CorelDRAW</span>
-          <span>Photoshop</span>
-          <span>Illustrator</span>
-          <span>Premiere Pro</span>
-          <span>After Effects</span>
-          <span>Blender</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Portfolio Section -->
-  <section class="portfolio" id="portfolio">
-    <div class="container">
-      <h2 data-id>Portofolio Terbaru</h2>
-      <h2 data-en style="display:none;">Latest Portfolio</h2>
-
-      <div class="portfolio-grid">
-        <div class="portfolio-item">
-          <div class="portfolio-img">
-            <img src="fotohero.png" alt="Project 1">
-            <div class="overlay">
-              <a href="#" data-id>Lihat Detail</a>
-              <a href="#" data-en style="display:none;">View Details</a>
-            </div>
-          </div>
-          <h3 data-id>Brand Identity Design</h3>
-          <h3 data-en style="display:none;">Brand Identity Design</h3>
-          <p data-id>Desain branding lengkap untuk startup fashion</p>
-          <p data-en style="display:none;">Complete branding design for fashion startup</p>
-        </div>
-
-        <div class="portfolio-item">
-          <div class="portfolio-img">
-            <img src="fotohero.png" alt="Project 2">
-            <div class="overlay">
-              <a href="#" data-id>Lihat Detail</a>
-              <a href="#" data-en style="display:none;">View Details</a>
-            </div>
-          </div>
-          <h3 data-id>Social Media Campaign</h3>
-          <h3 data-en style="display:none;">Social Media Campaign</h3>
-          <p data-id>Campaign visual untuk produk lifestyle</p>
-          <p data-en style="display:none;">Visual campaign for lifestyle product</p>
-        </div>
-
-        <div class="portfolio-item">
-          <div class="portfolio-img">
-            <img src="fotohero.png" alt="Project 3">
-            <div class="overlay">
-              <a href="#" data-id>Lihat Detail</a>
-              <a href="#" data-en style="display:none;">View Details</a>
-            </div>
-          </div>
-          <h3 data-id>Mobile App Design</h3>
-          <h3 data-en style="display:none;">Mobile App Design</h3>
-          <p data-id>UI/UX design untuk aplikasi e-commerce</p>
-          <p data-en style="display:none;">UI/UX design for e-commerce application</p>
-        </div>
-
-        <div class="portfolio-item">
-          <div class="portfolio-img">
-            <img src="fotohero.png" alt="Project 4">
-            <div class="overlay">
-              <a href="#" data-id>Lihat Detail</a>
-              <a href="#" data-en style="display:none;">View Details</a>
-            </div>
-          </div>
-          <h3 data-id>Packaging Design</h3>
-          <h3 data-en style="display:none;">Packaging Design</h3>
-          <p data-id>Desain kemasan untuk produk kecantikan</p>
-          <p data-en style="display:none;">Packaging design for beauty products</p>
-        </div>
-
-        <div class="portfolio-item">
-          <div class="portfolio-img">
-            <img src="fotohero.png" alt="Project 5">
-            <div class="overlay">
-              <a href="#" data-id>Lihat Detail</a>
-              <a href="#" data-en style="display:none;">View Details</a>
-            </div>
-          </div>
-          <h3 data-id>Website Design</h3>
-          <h3 data-en style="display:none;">Website Design</h3>
-          <p data-id>Desain website untuk perusahaan teknologi</p>
-          <p data-en style="display:none;">Website design for tech company</p>
-        </div>
-
-        <div class="portfolio-item">
-          <div class="portfolio-img">
-            <img src="fotohero.png" alt="Project 6">
-            <div class="overlay">
-              <a href="#" data-id>Lihat Detail</a>
-              <a href="#" data-en style="display:none;">View Details</a>
-            </div>
-          </div>
-          <h3 data-id>Illustration Set</h3>
-          <h3 data-en style="display:none;">Illustration Set</h3>
-          <p data-id>Ilustrasi custom untuk buku anak-anak</p>
-          <p data-en style="display:none;">Custom illustrations for children's book</p>
-        </div>
-      </div>
-
-      <div class="cta-portfolio">
-        <p data-id>Ingin melihat lebih banyak project?</p>
-        <p data-en style="display:none;">Want to see more projects?</p>
-        <a href="#" class="btn btn-primary" data-id>
-          <i class="fas fa-folder-open"></i> Lihat Portfolio Lengkap
-        </a>
-        <a href="#" class="btn btn-primary" data-en style="display:none;">
-          <i class="fas fa-folder-open"></i> View Full Portfolio
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2 data-id>Hubungi Saya</h2>
-      <h2 data-en style="display:none;">Get In Touch</h2>
-      <p class="contact-subtitle" data-id>Mari berkolaborasi dan ciptakan sesuatu yang luar biasa bersama!</p>
-      <p class="contact-subtitle" data-en style="display:none;">Let's collaborate and create something amazing together!</p>
-
-      <div class="contact-content">
-        <div class="contact-methods">
-          <div class="contact-method">
-            <i class="fas fa-envelope"></i>
-            <h4 data-id>Email</h4>
-            <h4 data-en style="display:none;">Email</h4>
-            <p><a href="mailto:hello@nabil.com">hello@nabil.com</a></p>
-          </div>
-
-          <div class="contact-method">
-            <i class="fas fa-phone"></i>
-            <h4 data-id>Telepon</h4>
-            <h4 data-en style="display:none;">Phone</h4>
-            <p><a href="tel:+6281234567890">+62 812 3456 7890</a></p>
-          </div>
-
-          <div class="contact-method">
-            <i class="fas fa-map-marker-alt"></i>
-            <h4 data-id>Lokasi</h4>
-            <h4 data-en style="display:none;">Location</h4>
-            <p data-id>Jakarta, Indonesia</p>
-            <p data-en style="display:none;">Jakarta, Indonesia</p>
-          </div>
-
-          <div class="contact-method">
-            <i class="fas fa-comments"></i>
-            <h4 data-id>Chat</h4>
-            <h4 data-en style="display:none;">Chat</h4>
-            <p><a href="#" data-id>Hubungi via WhatsApp</a><a href="#" data-en style="display:none;">Chat on WhatsApp</a></p>
-          </div>
-        </div>
-
-        <form class="contact-form">
-          <div class="form-group">
-            <input type="text" placeholder="Nama Anda" data-id required>
-            <input type="text" placeholder="Your Name" data-en style="display:none;" required>
-          </div>
-
-          <div class="form-group">
-            <input type="email" placeholder="Email Anda" data-id required>
-            <input type="email" placeholder="Your Email" data-en style="display:none;" required>
-          </div>
-
-          <div class="form-group">
-            <input type="text" placeholder="Subjek" data-id required>
-            <input type="text" placeholder="Subject" data-en style="display:none;" required>
-          </div>
-
-          <div class="form-group">
-            <textarea placeholder="Pesan Anda..." data-id rows="5" required></textarea>
-            <textarea placeholder="Your Message..." data-en style="display:none;" rows="5" required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary" data-id>
-            <i class="fas fa-paper-plane"></i> Kirim Pesan
-          </button>
-          <button type="submit" class="btn btn-primary" data-en style="display:none;">
-            <i class="fas fa-paper-plane"></i> Send Message
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
-
   <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3 data-id>Miftah Art Creative</h3>
-        <h3 data-en style="display:none;">Miftah Art Creative</h3>
-        <p data-id>Desainer grafis profesional yang siap mewujudkan visi kreatif Anda.</p>
-        <p data-en style="display:none;">Professional graphic designer ready to bring your creative vision to life.</p>
-      </div>
-
-      <div class="footer-section">
-        <h4 data-id>Link Cepat</h4>
-        <h4 data-en style="display:none;">Quick Links</h4>
-        <ul>
-          <li><a href="#home" data-id>Beranda</a><a href="#home" data-en style="display:none;">Home</a></li>
-          <li><a href="#about" data-id>Tentang</a><a href="#about" data-en style="display:none;">About</a></li>
-          <li><a href="#portfolio" data-id>Portofolio</a><a href="#portfolio" data-en style="display:none;">Portfolio</a></li>
-          <li><a href="#contact" data-id>Hubungi</a><a href="#contact" data-en style="display:none;">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h4 data-id>Sosial Media</h4>
-        <h4 data-en style="display:none;">Social Media</h4>
-        <div class="social-links">
-          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" title="Behance"><i class="fab fa-behance"></i></a>
-          <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-        </div>
+    <div class="socials">
+      <p data-id>Temukan saya di</p>
+      <p data-en style="display:none;">Find me on</p>
+      <div class="icons">
+         <a href="#">f</a>
+        <a href="#">⧉</a>
+        <a href="#">⌕</a>
+        <a href="#">in</a>
       </div>
     </div>
-
-    <div class="footer-bottom">
-      <p data-id>© 2025 Muhd. Nabil – Semua Hak Dilindungi</p>
-      <p data-en style="display:none;">© 2025 Muhd. Nabil – All Rights Reserved</p>
-    </div>
+    <p>© 2025 Muhd. Nabil – All Rights Reserved</p>
   </footer>
 </body>
 </html>
