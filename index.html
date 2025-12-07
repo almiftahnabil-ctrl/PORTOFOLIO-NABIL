@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio Muhd. Nabil – Graphic Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // === Ganti Bahasa ===
+    function setLang(lang) {
+      const langs = ['id', 'en'];
+      langs.forEach(l => document.querySelectorAll('[data-' + l + ']').forEach(el => el.style.display = 'none'));
+      document.querySelectorAll('[data-' + lang + ']').forEach(el => el.style.display = 'block');
+      document.documentElement.setAttribute('lang', lang);
+    }
+
+    // === Mode Gelap / Terang ===
+    function toggleMode() {
+      const body = document.body;
+      const isLight = body.getAttribute('data-theme') === 'light';
+      const newTheme = isLight ? 'dark' : 'light';
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // === Menu Burger ===
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
+      document.querySelector('.burger').classList.toggle('open');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.body.setAttribute('data-theme', savedTheme);
+    });
+    
+  </script>
+  <script>
+  // Tutup menu otomatis setelah klik link (di HP)
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('active');
+      document.querySelector('.burger').classList.remove('open');
+    });
+  });
+</script>
+
+</head>
+<body data-theme="dark">
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">Sam<span>Creative</span></h1>
+
+      <div class="burger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#home" data-id>Beranda</a><a href="#home" data-en style="display:none;">Home</a></li>
+        <li><a href="#about" data-id>Tentang</a><a href="#about" data-en style="display:none;">About</a></li>
+        <li><a href="#project" data-id>Proyek</a><a href="#project" data-en style="display:none;">Project</a></li>
+        <li><a href="#contact" data-id>Kontak</a><a href="#contact" data-en style="display:none;">Contact</a></li>
+      </ul>
+
+      <div class="controls">
+        <button onclick="setLang('id')">🇮🇩</button>
+        <button onclick="setLang('en')">🇬🇧</button>
+        <button onclick="toggleMode()">🌙/☀️</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-text fade">
+      <h3 data-id>Halo Teman!</h3>
+      <h3 data-en style="display:none;">Hello Buds</h3>
+
+      <h1 data-id>Saya <span>Muhd. Nabil</span></h1>
+      <h1 data-en style="display:none;">I am <span>Muhd. Nabil</span></h1>
+
+      <h4 data-id>Desainer Grafis & Pecinta Visual</h4>
+      <h4 data-en style="display:none;">Graphic Designer & Visual Enthusiast</h4>
+
+      <p data-id>Saya fokus menciptakan desain visual profesional untuk media sosial, acara, dan branding.</p>
+      <p data-en style="display:none;">I focus on creating professional visual designs for social media, events, and branding.</p>
+
+      <div class="buttons">
+        <a href="#" class="btn btn-primary" data-id>⬇ Unduh CV</a>
+        <a href="#" class="btn btn-primary" data-en style="display:none;">⬇ Download CV</a>
+        <a href="#about" class="btn btn-outline" data-id>Selengkapnya</a>
+        <a href="#about" class="btn btn-outline" data-en style="display:none;">More</a>
+      </div>
+    </div>
+
+    <div class="hero-image fade">
+      <div class="decor-plus">+</div>
+      <div class="decor-circle"></div>
+      <img src="fotohero.png" alt="Muhd. Nabil">
+    </div>
+  </section>
+
+  <footer>
+    <div class="socials">
+      <p data-id>Temukan saya di</p>
+      <p data-en style="display:none;">Find me on</p>
+      <div class="icons">
+        <a href="#">f</a>
+        <a href="#">⧉</a>
+        <a href="#">⌕</a>
+        <a href="#">in</a>
+      </div>
+    </div>
+    <p>© 2025 Muhd. Nabil – All Rights Reserved</p>
+  </footer>
+</body>
+</html>
