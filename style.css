@@ -433,3 +433,284 @@ footer {
     gap: 0.4rem;
   }
 }
+/* OUR CLIENTS SECTION */
+.clients {
+  padding: 5rem 1rem;
+  background: var(--bg);
+  text-align: center;
+  overflow: hidden;
+}
+
+.clients-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.clients h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.clients h2 span {
+  color: var(--accent);
+}
+
+.clients p {
+  color: #aaa;
+  margin-bottom: 3rem;
+  font-size: 1rem;
+}
+
+/* SLIDER ANIMATION */
+.client-slider {
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.slide-track {
+  display: flex;
+  width: calc(250px * 10); /* 10 = jumlah total logo di atas */
+  animation: scroll 30s linear infinite;
+}
+
+.slide {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.slide img {
+  height: 60px;
+  width: auto;
+  filter: none;         /* hilangkan efek abu-abu */
+  opacity: 1;           /* biar jelas */
+  transition: .3s;
+}
+
+
+.slide img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-250px * 5)); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .clients h2 {
+    font-size: 1.6rem;
+  }
+  .slide img {
+    height: 45px;
+  }
+}
+/* === CLIENT SLIDER WITH TEXT === */
+
+.slide {
+  width: 180px;            /* lebih kecil supaya muat banyak */
+  height: 120px;
+  display: flex;
+  flex-direction: column;  /* supaya teks berada di bawah logo */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.slide img {
+  height: 60px;
+  width: auto;
+  margin-bottom: 0.4rem;
+  opacity: 1;
+  filter: none;            /* biar logo tidak hitam-putih */
+  transition: .3s;
+}
+
+.slide img:hover {
+  transform: scale(1.08);
+}
+
+.client-name {
+  font-size: 0.75rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+/* TRACK SPEED & LOOP */
+.slide-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+/* PAUSE WHEN HOVER */
+.client-slider:hover .slide-track {
+  animation-play-state: paused;
+}
+
+/* MARQUEE ANIMATION */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .slide img { height: 45px; }
+  .slide { width: 140px; }
+}
+/* === CLIENT SLIDER FIXED === */
+.client-slider {
+  position: relative;
+  overflow: hidden;     /* untuk animasi, tapi tidak memotong vertikal */
+  padding: 1rem 0;      /* tambahkan ruang atas-bawah */
+}
+
+.slide-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.slide {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.slide img {
+  max-height: 80px;        /* TINGGI FLEXIBEL */
+  width: auto;             /* Menjaga proporsi logo */
+  object-fit: contain;     /* BIAR TIDAK TERPOTONG */
+  margin-bottom: 0.5rem;
+  filter: none;
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.slide img:hover {
+  transform: scale(1.08);
+}
+
+.client-name {
+  font-size: 0.8rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+/* ANIMASI */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .slide img {
+    max-height: 55px;   /* lebih kecil untuk HP */
+  }
+
+  .client-name {
+    font-size: 0.7rem;
+  }
+}
+.slide {
+  min-width: 180px;
+}
+/* === CLIENT SLIDER - TEXT BESIDE LOGO === */
+
+.client-slider {
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0;
+}
+
+.slide-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  gap: 1rem;                /* jarak logo & teks */
+  min-width: 220px;         /* supaya konten tidak ketarik */
+}
+
+.slide img {
+  height: 55px;
+  width: auto;
+  object-fit: contain;      /* anti kepotong */
+  filter: none;
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.slide:hover img {
+  transform: scale(1.08);
+}
+
+.client-name {
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;      /* supaya nama tidak turun baris */
+  opacity: 0.85;
+}
+
+/* Animasi bergerak */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pause saat hover */
+.client-slider:hover .slide-track {
+  animation-play-state: paused;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slide {
+    min-width: 180px;
+    gap: 0.5rem;
+  }
+  .slide img {
+    height: 40px;
+  }
+  .client-name {
+    font-size: 0.75rem;
+  }
+}
+/* === FIX TEKS CLIENT TIDAK MUNCUL === */
+
+.slide {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 1rem;
+}
+
+.client-name {
+  display: inline-block !important;
+  color: var(--text) !important;   /* mengikuti tema */
+  font-size: 0.9rem;
+  z-index: 20;
+  white-space: nowrap;
+}
