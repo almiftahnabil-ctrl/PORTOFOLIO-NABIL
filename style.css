@@ -714,3 +714,120 @@ footer {
   z-index: 20;
   white-space: nowrap;
 }
+/* Container utama */
+.client-slider {
+  width: 100%;
+  overflow: visible !important;   /* BIARKAN LOGO KELUAR TANPA TERPOTONG */
+  padding: 40px 0;                /* PERBESAR RUANG ATAS BAWAH */
+  display: flex;
+  justify-content: center;
+}
+
+/* Track (yang berjalan) */
+.slide-track {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  animation: marquee 25s linear infinite;
+  width: max-content;
+  padding: 20px 0;                /* ruang vertikal tambahan */
+  overflow: visible !important;
+}
+
+/* Setiap item logo + nama */
+.slide {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  overflow: visible !important;   /* BIAR TIDAK TERPOTONG */
+}
+
+/* LOGO */
+.slide img {
+  height: 70px;                   /* ukuran lebih tinggi */
+  width: auto;
+  object-fit: contain;            /* anti terpotong */
+  overflow: visible !important;
+}
+
+/* TEXT */
+.client-name {
+  font-size: 1rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* Animasi */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.client-slider {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+}
+
+.slide-track {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  width: calc(200%); /* penting agar loop mulus */
+  animation: scroll 18s linear infinite;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.slide img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
+
+.client-name {
+  white-space: nowrap;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* ANIMASI LOOP */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.client-slider {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  position: relative;
+}
+
+.slide-track {
+  display: inline-flex;        /* WAJIB: bukan flex biasa */
+  white-space: nowrap;         /* WAJIB: supaya tidak wrap */
+  animation: scroll 20s linear infinite;
+}
+
+.slide {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-right: 4rem;          /* jarak antar slide */
+}
+
+.slide img {
+  height: 70px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.client-name {
+  color: var(--text);
+  font-size: 1rem;
+  white-space: nowrap;
+}
