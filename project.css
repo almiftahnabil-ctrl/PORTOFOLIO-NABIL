@@ -1,0 +1,88 @@
+/* === SECTION TITLE STYLE === */
+.projects-section {
+  padding: 80px 5%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.section-title span {
+  color: #6c63ff; /* warna ungu khas homepage */
+}
+
+.section-subtitle {
+  margin-bottom: 40px;
+  color: #aaa;
+}
+
+/* === GRID === */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* === CARD === */
+.project-card {
+  background: #111; /* sama dengan panel homepage */
+  border: 1.5px solid rgba(255,255,255,0.06);
+  border-radius: 22px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  transition: 0.3s ease;
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  border-color: #6c63ff;
+  box-shadow: 0 0 22px rgba(108, 99, 255, 0.35); /* glow ungu */
+}
+
+/* === BAGIAN FOTO/LOGO === */
+.thumb-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-bottom: 1.5px solid rgba(255,255,255,0.08);
+  background: #000; /* fallback */
+}
+
+.thumb-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* FOTO MENUTUPI THUMBNAIL */
+  border-radius: 0;
+  transform: scale(1.02);  /* sedikit zoom agar tidak ada garis putih */
+}
+
+
+/* === TEXT === */
+.info {
+  padding: 18px;
+  text-align: left;
+}
+
+.info h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.info p {
+  font-size: 0.95rem;
+  color: #bcbcbc;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 500px) {
+  .thumb-img {
+    height: 140px;
+  }
+}
