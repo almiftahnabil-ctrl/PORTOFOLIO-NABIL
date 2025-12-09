@@ -1,0 +1,128 @@
+/* === GLOBAL === */
+
+body {
+  background: #0e0e0e;
+  color: #f1f1f1;
+  font-family: "Poppins", sans-serif;
+  padding: 40px 20px;
+}
+
+.project-detail {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Tombol kembali */
+.back-btn {
+  color: #8f88ff;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+/* Judul */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 5px;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+/* Foto utama */
+.hero-img img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 40px;
+}
+
+/* Judul section */
+.section-heading {
+  margin: 20px 0 10px;
+  font-size: 1.5rem;
+}
+
+/* === GALLERY FOTO === */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 1 / 1;            /* square / cocok untuk feed IG */
+  object-fit: cover;
+  border-radius: 14px;
+  background: #111;
+}
+.add-photo-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #6a4cff;
+  color: white;
+  font-size: 32px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(106, 76, 255, 0.6);
+  transition: .3s;
+  z-index: 1000;
+}
+
+.add-photo-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(106, 76, 255, 0.9);
+}
+
+@media (max-width: 600px) {
+  .add-photo-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+/* Wrapper halaman */
+.project-gallery {
+  max-width: 1200px;            /* Batas lebar halaman */
+  margin: 120px auto 60px;      /* Tengah + jarak dari header */
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Box foto */
+.project-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 5;          /* Square seperti feed Instagram */
+  object-fit: cover;
+  border-radius: 16px;
+  background: #111;             /* Placeholder hitam */
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  transition: .3s ease;
+}
+
+/* Hover efek */
+.project-gallery img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px rgba(120, 87, 255, 0.6);
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+  .project-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+  }
+}

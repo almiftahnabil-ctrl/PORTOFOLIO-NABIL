@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Detail Proyek</title>
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="detail.css">
+  <!-- CSS khusus halaman proyek -->
+  
+</head>
+<script>
+function addPhoto() {
+  document.getElementById("photoInput").click();
+}
+
+function previewPhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.createElement("img");
+    img.src = e.target.result;
+
+    document.querySelector(".project-gallery").appendChild(img);
+  };
+
+  reader.readAsDataURL(file);
+}
+</script>
+
+<body data-theme="dark">
+
+  <!-- ============ NAVBAR (dari halaman utama) ============ -->
+  <header>
+    <nav class="navbar">
+      <h1 class="logo">Miftah Art<span>Creative</span></h1>
+
+      <div class="burger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="../index.html">Beranda</a></li>
+        <li><a href="../index.html#about">Tentang</a></li>
+        <li><a href="../project.html">Proyek</a></li>
+        <li><a href="../index.html#contact">Hubungi</a></li>
+      </ul>
+
+      <div class="controls">
+        <button onclick="setLang('id')">🇮🇩</button>
+        <button onclick="setLang('en')">🇬🇧</button>
+        <button onclick="toggleMode()">🌙/☀️</button>
+      </div>
+    </nav>
+  </header>
+
+
+  <section class="project-gallery">
+
+    <img src="../ultah bapak.png" alt="">
+    <img src="../ultah bapak.png" alt="">
+    <img src="../ultah bapak.png" alt="">
+    <img src="../ultah bapak.png" alt="">
+    <img src="../ultah bapak.png" alt="">
+    <img src="../ultah bapak.png" alt="">
+
+</section> <!-- WAJIB DITUTUP -->
+
+<!-- Tombol tambah -->
+<button class="add-btn" onclick="document.getElementById('uploadInput').click()">＋</button>
+
+<input type="file" id="uploadInput" accept="image/*" style="display:none" onchange="uploadToCloudinary(event)">
+
+
+
+
+
+
+  <!-- ============ FOOTER (dari halaman utama) ============ -->
+  <footer>
+    <div class="socials">
+      <p>Temukan saya di</p>
+      <div class="icons">
+        <a href="#">f</a>
+        <a href="#">⧉</a>
+        <a href="#">⌕</a>
+        <a href="#">in</a>
+      </div>
+    </div>
+    <p>© 2025 Muhd. Nabil – All Rights Reserved</p>
+  </footer>
+<script>
+const cloudName = "dvgfdtbyf";  
+const uploadPreset = "portofolio_nabil";
+
+// Upload ke Cloudinary
+function uploadToCloudinary(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+
+    fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Uploaded URL:", data.secure_url);
+
+        // Tampilkan gambar baru
+        addImageToGallery(data.secure_url);
+
+        // Simpan ke localStorage
+        saveImageURL(data.secure_url);
+    })
+    .catch(err => console.error("Upload error:", err));
+}
+
+function addImageToGallery(url) {
+    const gallery = document.querySelector(".project-gallery");
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "Project Image";
+
+    gallery.appendChild(img);
+}
+
+function saveImageURL(url) {
+    let stored = JSON.parse(localStorage.getItem("portfolioImages") || "[]");
+    stored.push(url);
+    localStorage.setItem("portfolioImages", JSON.stringify(stored));
+}
+
+function loadSavedImages() {
+    let stored = JSON.parse(localStorage.getItem("portfolioImages") || "[]");
+    stored.forEach(url => addImageToGallery(url));
+}
+
+// Load saat halaman dibuka
+loadSavedImages();
+</script>
+
+</body>
+</html>
