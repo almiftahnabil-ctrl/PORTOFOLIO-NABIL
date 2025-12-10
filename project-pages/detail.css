@@ -126,3 +126,32 @@ body {
     gap: 14px;
   }
 }
+.add-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    background: #6a4cff;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 18px rgba(106, 76, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.25s ease;
+    z-index: 9999;
+}
+
+.add-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 25px rgba(106, 76, 255, 0.8);
+}
+
+.add-btn:active {
+    transform: scale(0.98);
+}

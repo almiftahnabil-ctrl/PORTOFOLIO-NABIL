@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Upload Panel</title>
+
+<style>
+body {
+    font-family: Poppins, sans-serif;
+    background: #0d0d0d;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 420px;
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+input[type="file"] {
+    margin-top: 15px;
+    padding: 10px;
+    background: #222;
+    border-radius: 8px;
+    width: 100%;
+    color: white;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #6a4cff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #7d63ff;
+}
+
+#status {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>📤 Admin Upload Panel</h1>
+    <p>Silakan unggah foto baru untuk galeri.</p>
+
+    <input type="file" id="uploadInput" accept="image/*">
+
+    <button onclick="startUpload()">Unggah Foto</button>
+
+    <p id="status">Menunggu upload...</p>
+</div>
+
+<!-- FIREBASE SCRIPT -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
+
+<script>
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBeCvaqOiqVJsTW3EH2iUGYvAwub_VtI9M",
+  authDomain: "portfolio-nabil.firebaseapp.com",
+  databaseURL: "https://portfolio-nabil-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "portfolio-nabil",
+  storageBucket: "portfolio-nabil.firebasestorage.app",
+  messagingSenderId: "541632788938",
+  appId: "1:541632788938:web:5fab9f0f28043b4296f733"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Cloudinary Config
+const cloudName = "dvgfdtbyf";
+const uploadPreset = "portofolio_nabil";
+
+// START UPLOAD
+async function startUpload() {
+    const file = document.getElementById("uploadInput").files[0];
+    if (!file) {
+        alert("Pilih foto terlebih dahulu!");
+        return;
+    }
+
+    document.getElementById("status").innerText = "Mengunggah foto ke Cloudinary...";
+
+    let data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", uploadPreset);
+
+    try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: "POST",
+            body: data
+        });
+
+        const result = await res.json();
+        console.log("Cloudinary result:", result);
+
+        if (!result.secure_url) {
+            document.getElementById("status").innerHTML =
+                "❌ Gagal Upload:<br>" + (result.error?.message || "Unknown error");
+            return;
+        }
+
+        document.getElementById("status").innerText = "✔ Upload sukses! Menyimpan ke database...";
+
+        saveImageToFirebase(result.secure_url);
+
+    } catch (err) {
+        document.getElementById("status").innerText = "❌ Upload error!";
+        console.error(err);
+    }
+}
+
+// SIMPAN URL FOTO KE FIREBASE
+function saveImageToFirebase(url) {
+    db.ref("project_gallery").push({
+        image: url,
+        time: Date.now()
+    }).then(() => {
+        document.getElementById("status").innerText = "✔ Foto disimpan!";
+    });
+}
+</script>
+
+</body>
+</html>
