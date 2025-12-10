@@ -8,34 +8,13 @@
 
   <!-- CSS GLOBAL -->
   <link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="detail.css">
-  <!-- CSS khusus halaman proyek -->
-  
+  <link rel="stylesheet" href="detail.css">
+
 </head>
-<script>
-function addPhoto() {
-  document.getElementById("photoInput").click();
-}
-
-function previewPhoto(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = document.createElement("img");
-    img.src = e.target.result;
-
-    document.querySelector(".project-gallery").appendChild(img);
-  };
-
-  reader.readAsDataURL(file);
-}
-</script>
 
 <body data-theme="dark">
 
-  <!-- ============ NAVBAR (dari halaman utama) ============ -->
+  <!-- ============ NAVBAR ============ -->
   <header>
     <nav class="navbar">
       <h1 class="logo">Miftah Art<span>Creative</span></h1>
@@ -59,29 +38,22 @@ function previewPhoto(event) {
     </nav>
   </header>
 
+  <!-- ============ GALERI FOTO ============ -->
+  <section class="project-gallery" id="gallery">
+    <!-- FOTO DEFAULT (boleh hapus) -->
+    <img src="../ultah bapak.png">
+    <img src="../ultah bapak.png">
+    <img src="../ultah bapak.png">
+    <img src="../ultah bapak.png">
+    <img src="../ultah bapak.png">
+    <img src="../ultah bapak.png">
+  </section>
 
-  <section class="project-gallery">
+  <!-- Tombol tambah foto -->
+  <button class="add-btn" onclick="document.getElementById('uploadInput').click()">＋</button>
+  <input type="file" id="uploadInput" accept="image/*" style="display:none" onchange="uploadToCloudinary(event)">
 
-    <img src="../ultah bapak.png" alt="">
-    <img src="../ultah bapak.png" alt="">
-    <img src="../ultah bapak.png" alt="">
-    <img src="../ultah bapak.png" alt="">
-    <img src="../ultah bapak.png" alt="">
-    <img src="../ultah bapak.png" alt="">
-
-</section> <!-- WAJIB DITUTUP -->
-
-<!-- Tombol tambah -->
-<button class="add-btn" onclick="document.getElementById('uploadInput').click()">＋</button>
-
-<input type="file" id="uploadInput" accept="image/*" style="display:none" onchange="uploadToCloudinary(event)">
-
-
-
-
-
-
-  <!-- ============ FOOTER (dari halaman utama) ============ -->
+  <!-- ============ FOOTER ============ -->
   <footer>
     <div class="socials">
       <p>Temukan saya di</p>
@@ -94,59 +66,83 @@ function previewPhoto(event) {
     </div>
     <p>© 2025 Muhd. Nabil – All Rights Reserved</p>
   </footer>
+
+
+<!-- ====================================================== -->
+<!-- ============== FIREBASE + CLOUDINARY JS ============== -->
+<!-- ====================================================== -->
+
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
+
 <script>
-const cloudName = "dvgfdtbyf";  
+/* ------------------ FIREBASE CONFIG ------------------ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBeCvaqOiqVJsTW3EH2iUGYvAwub_VtI9M",
+  authDomain: "portfolio-nabil.firebaseapp.com",
+  databaseURL: "https://portfolio-nabil-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "portfolio-nabil",
+  storageBucket: "portfolio-nabil.firebasestorage.app",
+  messagingSenderId: "541632788938",
+  appId: "1:541632788938:web:5fab9f0f28043b4296f733",
+  measurementId: "G-YKQZCD5J3S"
+};
+
+// Init Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* ------------------ CLOUDINARY CONFIG ------------------ */
+const cloudName = "dvgfdtbyf";
 const uploadPreset = "portofolio_nabil";
 
-// Upload ke Cloudinary
+/* ------------------ UPLOAD CLOUDINARY ------------------ */
 function uploadToCloudinary(event) {
     const file = event.target.files[0];
     if (!file) return;
 
-    let formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
+    let data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", uploadPreset);
 
     fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: "POST",
-        body: formData
+        body: data
     })
     .then(res => res.json())
-    .then(data => {
-        console.log("Uploaded URL:", data.secure_url);
-
-        // Tampilkan gambar baru
-        addImageToGallery(data.secure_url);
-
-        // Simpan ke localStorage
-        saveImageURL(data.secure_url);
-    })
-    .catch(err => console.error("Upload error:", err));
+    .then(result => {
+        console.log("URL Upload:", result.secure_url);
+        saveImageToFirebase(result.secure_url); // simpan ke Firebase
+    });
 }
 
-function addImageToGallery(url) {
-    const gallery = document.querySelector(".project-gallery");
-
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = "Project Image";
-
-    gallery.appendChild(img);
+/* ------------------ SIMPAN URL ke FIREBASE ------------------ */
+function saveImageToFirebase(url) {
+  db.ref("project_gallery").push({
+    image: url,
+    time: Date.now()
+  });
 }
 
-function saveImageURL(url) {
-    let stored = JSON.parse(localStorage.getItem("portfolioImages") || "[]");
-    stored.push(url);
-    localStorage.setItem("portfolioImages", JSON.stringify(stored));
+/* ------------------ LOAD FOTO DARI FIREBASE ------------------ */
+function loadGallery() {
+  const gallery = document.getElementById("gallery");
+
+  db.ref("project_gallery").on("value", snapshot => {
+    gallery.innerHTML = "";
+
+    snapshot.forEach(child => {
+      const data = child.val();
+      const img = document.createElement("img");
+      img.src = data.image;
+      gallery.appendChild(img);
+    });
+  });
 }
 
-function loadSavedImages() {
-    let stored = JSON.parse(localStorage.getItem("portfolioImages") || "[]");
-    stored.forEach(url => addImageToGallery(url));
-}
+loadGallery(); // jalankan saat halaman dibuka
 
-// Load saat halaman dibuka
-loadSavedImages();
 </script>
 
 </body>
