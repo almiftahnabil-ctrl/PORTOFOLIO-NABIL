@@ -76,8 +76,11 @@
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
 
+<!-- Firebase v8 (compatible with your code) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <script>
-/* ------------------ FIREBASE CONFIG ------------------ */
 const firebaseConfig = {
   apiKey: "AIzaSyBeCvaqOiqVJsTW3EH2iUGYvAwub_VtI9M",
   authDomain: "portfolio-nabil.firebaseapp.com",
@@ -89,15 +92,14 @@ const firebaseConfig = {
   measurementId: "G-YKQZCD5J3S"
 };
 
-// Init Firebase
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* ------------------ CLOUDINARY CONFIG ------------------ */
+/* CLOUDINARY */
 const cloudName = "dvgfdtbyf";
 const uploadPreset = "portofolio_nabil";
 
-/* ------------------ UPLOAD CLOUDINARY ------------------ */
+/* UPLOAD CLOUDINARY */
 function uploadToCloudinary(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -112,12 +114,11 @@ function uploadToCloudinary(event) {
     })
     .then(res => res.json())
     .then(result => {
-        console.log("URL Upload:", result.secure_url);
-        saveImageToFirebase(result.secure_url); // simpan ke Firebase
+        saveImageToFirebase(result.secure_url);
     });
 }
 
-/* ------------------ SIMPAN URL ke FIREBASE ------------------ */
+/* SAVE URL TO FIREBASE */
 function saveImageToFirebase(url) {
   db.ref("project_gallery").push({
     image: url,
@@ -125,7 +126,7 @@ function saveImageToFirebase(url) {
   });
 }
 
-/* ------------------ LOAD FOTO DARI FIREBASE ------------------ */
+/* LOAD GALLERY */
 function loadGallery() {
   const gallery = document.getElementById("gallery");
 
@@ -141,9 +142,9 @@ function loadGallery() {
   });
 }
 
-loadGallery(); // jalankan saat halaman dibuka
-
+loadGallery();
 </script>
+
 
 </body>
 </html>
