@@ -155,3 +155,77 @@ body {
 .add-btn:active {
     transform: scale(0.98);
 }
+.menu-wrapper {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+}
+
+.menu-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  font-size: 26px;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-action {
+  display: none;
+  position: absolute;
+  bottom: 65px;
+  right: 0;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.menu-action button {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-action button:hover {
+  background: #444;
+}
+/* ===== FLOATING MENU ===== */
+.menu-wrapper {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999;
+}
+
+/* tombol bulat ⋮ */
+.menu-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+
+  background: radial-gradient(circle at top left, #b56cff, #6a00ff);
+  color: white;
+
+  box-shadow:
+    0 0 10px rgba(155, 89, 255, 0.7),
+    0 0 25px rgba(155, 89, 255, 0.6),
+    0 0 40px rgba(155, 89, 255, 0.4);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-btn:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 15px rgba(180, 120, 255, 0.9),
+    0 0 35px rgba(180, 120, 255, 0.7),
+    0 0 55px rgba(180, 120, 255, 0.6);
+}

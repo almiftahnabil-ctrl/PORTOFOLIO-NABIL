@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Proyek</title>
 
   <!-- CSS GLOBAL -->
-  <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="detail.css">
-
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="detail.css" />
 </head>
 
 <body data-theme="dark">
@@ -17,7 +15,10 @@
   <!-- ============ NAVBAR ============ -->
   <header>
     <nav class="navbar">
-      <h1 class="logo">Miftah Art<span>Creative</span></h1>
+      <!-- Double click logo untuk buka login admin -->
+      <h1 class="logo" ondblclick="openAdminLogin()">
+        Miftah Art<span>Creative</span>
+      </h1>
 
       <div class="burger" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -39,19 +40,22 @@
   </header>
 
   <!-- ============ GALERI FOTO ============ -->
-  <section class="project-gallery" id="gallery">
-    <!-- FOTO DEFAULT (boleh hapus) -->
-    <img src="../ultah bapak.png">
-    <img src="../ultah bapak.png">
-    <img src="../ultah bapak.png">
-    <img src="../ultah bapak.png">
-    <img src="../ultah bapak.png">
-    <img src="../ultah bapak.png">
-  </section>
+  <section class="project-gallery" id="gallery"></section>
 
-  <!-- Tombol tambah foto -->
-  <button class="add-btn" onclick="document.getElementById('uploadInput').click()">＋</button>
-<input type="file" id="uploadInput" accept="image/*" style="display:none" onchange="uploadToCloudinary(event)">
+  <!-- ============ FLOATING MENU (ADMIN ONLY) ============ -->
+  <!-- disembunyikan dulu; akan ditampilkan hanya jika admin login -->
+  <div class="menu-wrapper" id="adminMenu" style="display:none;">
+    <button class="menu-btn" onclick="toggleMenuAction()" aria-label="Menu admin">⋮</button>
+
+    <div class="menu-action" id="menuAction">
+      <button onclick="addImage()">Tambah</button>
+      <button onclick="enableDelete()">Hapus</button>
+      <button onclick="logoutAdmin()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Input upload (tetap hidden) -->
+  <input type="file" id="uploadInput" accept="image/*" style="display:none" />
 
   <!-- ============ FOOTER ============ -->
   <footer>
@@ -67,84 +71,210 @@
     <p>© 2025 Muhd. Nabil – All Rights Reserved</p>
   </footer>
 
+  <!-- ============ ADMIN LOGIN MODAL ============ -->
+  <div id="adminLogin" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:2000;">
+    <div style="max-width:320px; margin:120px auto; background:#12001f; padding:25px; border-radius:15px; box-shadow:0 0 30px #8e44ff;">
+      <h3 style="color:#d6b8ff; text-align:center;">Admin Login</h3>
+      <input id="email" type="email" placeholder="Email" style="width:100%; padding:10px; margin:8px 0;">
+      <input id="password" type="password" placeholder="Password" style="width:100%; padding:10px; margin:8px 0;">
+      <button onclick="loginAdmin()" style="width:100%; padding:10px; background:#8e44ff; border:none; color:white; cursor:pointer;">Login</button>
+      <button onclick="closeAdminLogin()" style="width:100%; padding:10px; margin-top:8px; background:transparent; border:1px solid #8e44ff; color:#d6b8ff; cursor:pointer;">Batal</button>
+    </div>
+  </div>
 
-<!-- ====================================================== -->
-<!-- ============== FIREBASE + CLOUDINARY JS ============== -->
-<!-- ====================================================== -->
+  <!-- ====================================================== -->
+  <!-- ============== FIREBASE + CLOUDINARY JS ============== -->
+  <!-- ====================================================== -->
 
-<!-- Firebase CDN -->
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
+  <!-- PAKAI SATU VERSI SAJA (v8) agar konsisten -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-<!-- Firebase v8 (compatible with your code) -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    // =========================
+    // CONFIG
+    // =========================
+    const firebaseConfig = {
+      apiKey: "AIzaSyBeCvaqOiqVJsTW3EH2iUGYvAwub_VtI9M",
+      authDomain: "portfolio-nabil.firebaseapp.com",
+      databaseURL: "https://portfolio-nabil-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "portfolio-nabil",
+      storageBucket: "portfolio-nabil.firebasestorage.app",
+      messagingSenderId: "541632788938",
+      appId: "1:541632788938:web:5fab9f0f28043b4296f733",
+      measurementId: "G-YKQZCD5J3S"
+    };
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBeCvaqOiqVJsTW3EH2iUGYvAwub_VtI9M",
-  authDomain: "portfolio-nabil.firebaseapp.com",
-  databaseURL: "https://portfolio-nabil-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "portfolio-nabil",
-  storageBucket: "portfolio-nabil.firebasestorage.app",
-  messagingSenderId: "541632788938",
-  appId: "1:541632788938:web:5fab9f0f28043b4296f733",
-  measurementId: "G-YKQZCD5J3S"
-};
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const auth = firebase.auth();
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+    // CLOUDINARY
+    const cloudName = "dvgfdtbyf";
+    const uploadPreset = "portofolio_nabil";
 
-/* CLOUDINARY */
-const cloudName = "dvgfdtbyf";
-const uploadPreset = "portofolio_nabil";
+    // GANTI INI DENGAN EMAIL ADMIN KAMU
+    const ADMIN_EMAIL = "almiftahnabil@gmail.com";
 
-/* UPLOAD CLOUDINARY */
-function uploadToCloudinary(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    // state
+    let deleteMode = false;
+    let isAdmin = false;
 
-    let data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", uploadPreset);
+    // elemen
+    const galleryEl = document.getElementById("gallery");
+    const uploadInput = document.getElementById("uploadInput");
+    const adminMenu = document.getElementById("adminMenu");
+    const menuAction = document.getElementById("menuAction");
+    const adminLogin = document.getElementById("adminLogin");
 
-    fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    // =========================
+    // ADMIN AUTH
+    // =========================
+    auth.onAuthStateChanged(user => {
+      isAdmin = !!(user && user.email === ADMIN_EMAIL);
+
+      // menu hanya admin
+      adminMenu.style.display = isAdmin ? "block" : "none";
+
+      // matikan mode hapus saat bukan admin
+      if (!isAdmin) {
+        deleteMode = false;
+        document.body.classList.remove("delete-active");
+        closeMenuAction();
+      }
+    });
+
+    function openAdminLogin() {
+      adminLogin.style.display = "block";
+    }
+    function closeAdminLogin() {
+      adminLogin.style.display = "none";
+    }
+
+    function loginAdmin() {
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value;
+
+      auth.signInWithEmailAndPassword(email, pass)
+        .then(() => {
+          closeAdminLogin();
+          alert("Login berhasil");
+        })
+        .catch(err => alert(err.message));
+    }
+
+    function logoutAdmin() {
+      auth.signOut().then(() => {
+        alert("Logout berhasil");
+      });
+    }
+
+    // =========================
+    // MENU UI
+    // =========================
+    function toggleMenuAction() {
+      if (!isAdmin) return;
+      menuAction.style.display = (menuAction.style.display === "block") ? "none" : "block";
+    }
+    function closeMenuAction() {
+      menuAction.style.display = "none";
+    }
+
+    // klik di luar menu -> tutup
+    document.addEventListener("click", (e) => {
+      const clickedInside = adminMenu.contains(e.target);
+      if (!clickedInside) closeMenuAction();
+    });
+
+    function addImage() {
+      if (!isAdmin) return alert("Hanya admin yang boleh menambah foto.");
+      closeMenuAction();
+      uploadInput.click();
+    }
+
+    function enableDelete() {
+      if (!isAdmin) return alert("Hanya admin yang boleh menghapus foto.");
+      deleteMode = !deleteMode;
+      document.body.classList.toggle("delete-active", deleteMode);
+      closeMenuAction();
+      alert(deleteMode ? "Mode hapus aktif (klik foto untuk hapus)" : "Mode hapus mati");
+    }
+
+    // =========================
+    // UPLOAD -> CLOUDINARY -> FIREBASE
+    // =========================
+    uploadInput.addEventListener("change", uploadToCloudinary);
+
+    function uploadToCloudinary(event) {
+      if (!isAdmin) return; // guard ekstra
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", uploadPreset);
+
+      fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: "POST",
         body: data
-    })
-    .then(res => res.json())
-    .then(result => {
-        saveImageToFirebase(result.secure_url);
-    });
-}
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result && result.secure_url) {
+          saveImageToFirebase(result.secure_url);
+        } else {
+          alert("Upload gagal. Coba lagi.");
+        }
+        // reset supaya bisa upload file yang sama lagi
+        uploadInput.value = "";
+      })
+      .catch(() => {
+        alert("Upload gagal. Periksa koneksi.");
+        uploadInput.value = "";
+      });
+    }
 
-/* SAVE URL TO FIREBASE */
-function saveImageToFirebase(url) {
-  db.ref("project_gallery").push({
-    image: url,
-    time: Date.now()
-  });
-}
+    function saveImageToFirebase(url) {
+      // write akan ditolak kalau rules belum benar (bagus)
+      db.ref("project_gallery").push({
+        image: url,
+        time: Date.now()
+      });
+    }
 
-/* LOAD GALLERY */
-function loadGallery() {
-  const gallery = document.getElementById("gallery");
+    // =========================
+    // LOAD GALLERY
+    // =========================
+    function loadGallery() {
+      db.ref("project_gallery").on("value", snapshot => {
+        galleryEl.innerHTML = "";
 
-  db.ref("project_gallery").on("value", snapshot => {
-    gallery.innerHTML = "";
+        snapshot.forEach(child => {
+          const data = child.val();
+          const key = child.key;
 
-    snapshot.forEach(child => {
-      const data = child.val();
-      const img = document.createElement("img");
-      img.src = data.image;
-      gallery.appendChild(img);
-    });
-  });
-}
+          const wrapper = document.createElement("div");
+          wrapper.style.position = "relative";
 
-loadGallery();
-</script>
+          const img = document.createElement("img");
+          img.src = data.image;
 
+          img.addEventListener("click", () => {
+            if (!isAdmin || !deleteMode) return;
+            if (confirm("Hapus foto ini?")) {
+              db.ref("project_gallery/" + key).remove();
+            }
+          });
+
+          wrapper.appendChild(img);
+          galleryEl.appendChild(wrapper);
+        });
+      });
+    }
+
+    loadGallery();
+  </script>
 
 </body>
 </html>
